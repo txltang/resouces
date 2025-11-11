@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>计算机工作原理教学设计</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #4a86e8;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2rem;
+        }
+        
+        h2 {
+            color: #3498db;
+            margin: 25px 0 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed #bdc3c7;
+        }
+        
+        h3 {
+            color: #2980b9;
+            margin: 20px 0 10px;
+        }
+        
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+        }
+        
+        .section {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .highlight {
+            background-color: #e1f5fe;
+            padding: 15px;
+            border-left: 4px solid #4a86e8;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .example {
+            background-color: #e8f5e9;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .component-card {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .component-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .component-card h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .component-card h4::before {
+            content: "•";
+            color: #4a86e8;
+            font-size: 1.5rem;
+            margin-right: 8px;
+        }
+        
+        .workflow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 25px 0;
+            flex-wrap: wrap;
+        }
+        
+        .workflow-step {
+            text-align: center;
+            width: 18%;
+            min-width: 120px;
+            margin-bottom: 15px;
+        }
+        
+        .step-circle {
+            width: 70px;
+            height: 70px;
+            background: #4a86e8;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .step-arrow {
+            font-size: 1.5rem;
+            color: #4a86e8;
+            margin: 0 5px;
+        }
+        
+        .interactive-example {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .interactive-controls {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            background: #4a86e8;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        button:hover {
+            background: #3a76d8;
+        }
+        
+        #computer-output {
+            margin-top: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 5px;
+            min-height: 80px;
+            border: 1px solid #bdc3c7;
+        }
+        
+        /* 倒计时计时器样式 */
+        #countdown-timer {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 4cm;
+            height: 4cm;
+            background-color: #f0f8ff;
+            border: 2px solid #4a86e8;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
+            font-family: Arial, sans-serif;
+        }
+        
+        #timer-display {
+            font-size: 24px;
+            font-weight: bold;
+            color: #4a86e8;
+            margin-bottom: 10px;
+        }
+        
+        #timer-label {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .timer-controls {
+            display: flex;
+            gap: 5px;
+            margin-top: 5px;
+        }
+        
+        .timer-btn {
+            padding: 4px 10px;
+            font-size: 12px;
+            background-color: #4a86e8;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .timer-btn:hover {
+            background-color: #3a76d8;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .workflow {
+                flex-direction: column;
+            }
+            
+            .workflow-step {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+            
+            .step-arrow {
+                transform: rotate(90deg);
+                margin: 5px 0;
+            }
+            
+            #countdown-timer {
+                width: 3.5cm;
+                height: 3.5cm;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 倒计时计时器 -->
+    <div id="countdown-timer">
+        <div id="timer-display">40:00</div>
+        <div id="timer-label">课堂倒计时</div>
+        <div class="timer-controls">
+            <button class="timer-btn" id="start-btn">开始</button>
+            <button class="timer-btn" id="pause-btn">暂停</button>
+            <button class="timer-btn" id="reset-btn">重置</button>
+        </div>
+    </div>
+
+    <header>
+        <h1>计算机工作原理教学设计</h1>
+        <p class="subtitle">中职国家规划教材《计算机应用基础》</p>
+    </header>
+
+    <div class="section">
+        <h2>课程思政（课前德育3分钟）</h2>
+        <div class="highlight">
+            <p>同学们，计算机技术的发展体现了人类智慧的结晶。从第一台计算机ENIAC占地170平方米，到今天我们可以随身携带的智能手机，这是无数科学家和工程师共同努力的结果。</p>
+            <p>作为新时代的中职生，我们要学习他们勇于创新、严谨求实的科学精神，掌握好计算机技术，为将来建设科技强国贡献自己的力量。</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>教学目标</h2>
+        <div class="component-grid">
+            <div class="component-card">
+                <h4>知识目标</h4>
+                <p>了解计算机的基本组成结构和工作原理</p>
+            </div>
+            <div class="component-card">
+                <h4>能力目标</h4>
+                <p>能够简单描述计算机处理信息的过程</p>
+            </div>
+            <div class="component-card">
+                <h4>素养目标</h4>
+                <p>培养科学思维和逻辑分析能力</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>教学重点与难点</h2>
+        <div class="component-grid">
+            <div class="component-card">
+                <h4>教学重点</h4>
+                <ul>
+                    <li>计算机五大部件及其功能</li>
+                    <li>计算机工作流程（输入-处理-输出）</li>
+                </ul>
+            </div>
+            <div class="component-card">
+                <h4>教学难点</h4>
+                <ul>
+                    <li>控制器与运算器的协同工作原理</li>
+                    <li>存储程序概念的理解</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>知识复习（2分钟）</h2>
+        <div class="highlight">
+            <p><strong>提问：</strong>上节课我们学习了计算机硬件组成，谁能回忆一下计算机有哪些主要硬件？</p>
+            <p><strong>学生回答：</strong>显示器、键盘、鼠标、主机、打印机等</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>新课导入（3分钟）</h2>
+        <div class="example">
+            <p><strong>情景创设：</strong>假设我们有一个"智能厨房"，厨师（CPU）接收订单（输入），从冰箱（存储器）取出食材，在灶台（运算器）加工，最后由服务员（输出设备）上菜。计算机工作过程与此类似，今天我们就来探索这个奇妙的过程。</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>讲授新知（20分钟）</h2>
+        
+        <h3>一、计算机的五大部件</h3>
+        <div class="component-grid">
+            <div class="component-card">
+                <h4>输入设备</h4>
+                <p>计算机的"感官"</p>
+                <p><strong>例子：</strong>键盘、鼠标、扫描仪</p>
+                <p><strong>功能：</strong>将外部信息转换为计算机能理解的二进制代码</p>
+            </div>
+            <div class="component-card">
+                <h4>存储器</h4>
+                <p>计算机的"记忆仓库"</p>
+                <p><strong>例子：</strong>内存、硬盘</p>
+                <p><strong>功能：</strong>存放程序和数据</p>
+            </div>
+            <div class="component-card">
+                <h4>运算器</h4>
+                <p>计算机的"算盘"</p>
+                <p><strong>功能：</strong>进行算术运算和逻辑运算</p>
+            </div>
+            <div class="component-card">
+                <h4>控制器</h4>
+                <p>计算机的"指挥中心"</p>
+                <p><strong>功能：</strong>指挥协调各部件工作</p>
+            </div>
+            <div class="component-card">
+                <h4>输出设备</h4>
+                <p>计算机的"表达方式"</p>
+                <p><strong>例子：</strong>显示器、打印机、音响</p>
+                <p><strong>功能：</strong>将处理结果转换为人能理解的形式</p>
+            </div>
+        </div>
+        
+        <h3>二、计算机工作流程</h3>
+        <div class="workflow">
+            <div class="workflow-step">
+                <div class="step-circle">输入</div>
+                <p>通过输入设备输入数据</p>
+            </div>
+            <div class="step-arrow">→</div>
+            <div class="workflow-step">
+                <div class="step-circle">存储</div>
+                <p>数据存入存储器</p>
+            </div>
+            <div class="step-arrow">→</div>
+            <div class="workflow-step">
+                <div class="step-circle">处理</div>
+                <p>控制器和运算器处理数据</p>
+            </div>
+            <div class="step-arrow">→</div>
+            <div class="workflow-step">
+                <div class="step-circle">存储</div>
+                <p>结果存入存储器</p>
+            </div>
+            <div class="step-arrow">→</div>
+            <div class="workflow-step">
+                <div class="step-circle">输出</div>
+                <p>通过输出设备展示结果</p>
+            </div>
+        </div>
+        
+        <h3>三、计算机工作原理交互演示</h3>
+        <div class="interactive-example">
+            <p><strong>任务：</strong>计算 15 + 27 = ?</p>
+            <div class="interactive-controls">
+                <button id="step1">1. 输入数据</button>
+                <button id="step2">2. 存储数据</button>
+                <button id="step3">3. 控制器取指令</button>
+                <button id="step4">4. 运算器计算</button>
+                <button id="step5">5. 存储结果</button>
+                <button id="step6">6. 输出结果</button>
+                <button id="reset-example">重置演示</button>
+            </div>
+            <div id="computer-output">
+                <p>请点击上面的按钮查看计算机处理过程...</p>
+            </div>
+        </div>
+        
+        <h3>四、冯·诺依曼体系结构</h3>
+        <div class="highlight">
+            <p><strong>提出者：</strong>美籍匈牙利数学家冯·诺依曼</p>
+            <p><strong>核心思想：</strong>存储程序原理</p>
+            <p><strong>特点：</strong>程序和数据一样存储在内存中，按顺序执行</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>板书设计</h2>
+        <div class="example">
+            <pre>
+计算机工作原理
+├─ 五大部件
+│  ├─ 输入设备（键盘、鼠标）
+│  ├─ 存储器（内存、硬盘）
+│  ├─ 运算器（计算）
+│  ├─ 控制器（指挥）
+│  └─ 输出设备（显示器、打印机）
+└─ 工作流程
+   ├─ 输入 → 存储 → 处理 → 存储 → 输出
+   └─ 例子：15+27=42
+            </pre>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>课堂练习（5分钟）</h2>
+        <div class="highlight">
+            <p><strong>小组活动：</strong>请同学们分组，用肢体动作表演计算机处理"8×5+2"的过程，每组选一个代表解释表演的含义。</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>课堂总结（2分钟）</h2>
+        <div class="highlight">
+            <p>今天我们学习了计算机的五大部件和工作原理，知道了计算机如何像智能厨房一样处理信息。记住这个简单流程：输入→存储→处理→输出，这是所有计算机工作的基础。</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>作业布置（1分钟）</h2>
+        <div class="component-grid">
+            <div class="component-card">
+                <h4>基础作业</h4>
+                <p>画出计算机工作原理的流程图</p>
+            </div>
+            <div class="component-card">
+                <h4>思考题</h4>
+                <p>如果计算机没有内存，会怎么样？</p>
+            </div>
+            <div class="component-card">
+                <h4>预习任务</h4>
+                <p>预习下一课：计算机操作系统简介</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>教学反思</h2>
+        <div class="highlight">
+            <p>本节课通过生活化比喻帮助学生理解抽象概念，课堂互动良好。下次可以增加更多实物展示，如拆解旧计算机让学生直观看到各部件。部分学生对控制器和运算器的区别仍感困惑，需要设计更生动的演示方法。</p>
+        </div>
+    </div>
+
+    <script>
+        // 倒计时功能实现
+        let timer;
+        let timeLeft = 40 * 60; // 40分钟，以秒为单位
+        let isRunning = false;
+        
+        const timerDisplay = document.getElementById('timer-display');
+        const startBtn = document.getElementById('start-btn');
+        const pauseBtn = document.getElementById('pause-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        
+        function updateDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            // 时间到提示
+            if (timeLeft === 0) {
+                clearInterval(timer);
+                isRunning = false;
+                alert("时间到！");
+            }
+        }
+        
+        function startTimer() {
+            if (!isRunning) {
+                isRunning = true;
+                timer = setInterval(() => {
+                    timeLeft--;
+                    updateDisplay();
+                }, 1000);
+            }
+        }
+        
+        function pauseTimer() {
+            clearInterval(timer);
+            isRunning = false;
+        }
+        
+        function resetTimer() {
+            clearInterval(timer);
+            isRunning = false;
+            timeLeft = 40 * 60;
+            updateDisplay();
+        }
+        
+        startBtn.addEventListener('click', startTimer);
+        pauseBtn.addEventListener('click', pauseTimer);
+        resetBtn.addEventListener('click', resetTimer);
+        
+        // 初始化显示
+        updateDisplay();
+        
+        // 计算机工作原理交互演示
+        const computerOutput = document.getElementById('computer-output');
+        const stepButtons = [
+            document.getElementById('step1'),
+            document.getElementById('step2'),
+            document.getElementById('step3'),
+            document.getElementById('step4'),
+            document.getElementById('step5'),
+            document.getElementById('step6')
+        ];
+        const resetExampleBtn = document.getElementById('reset-example');
+        
+        const steps = [
+            "通过键盘输入'15+27'（输入设备工作）",
+            "数据'15'和'27'以及指令'+'存入内存（存储器工作）",
+            "控制器从内存取出数据和指令（控制器工作）",
+            "运算器执行加法运算：15 + 27 = 42（运算器工作）",
+            "控制器指挥将结果'42'存入内存（控制器和存储器工作）",
+            "结果'42'在显示器上显示（输出设备工作）"
+        ];
+        
+        let currentStep = 0;
+        
+        function updateExampleDisplay() {
+            computerOutput.innerHTML = `<p><strong>步骤 ${currentStep + 1}:</strong> ${steps[currentStep]}</p>`;
+            
+            // 高亮当前步骤按钮
+            stepButtons.forEach((btn, index) => {
+                if (index === currentStep) {
+                    btn.style.backgroundColor = '#2ecc71';
+                } else {
+                    btn.style.backgroundColor = '#4a86e8';
+                }
+            });
+        }
+        
+        stepButtons.forEach((btn, index) => {
+            btn.addEventListener('click', () => {
+                currentStep = index;
+                updateExampleDisplay();
+            });
+        });
+        
+        resetExampleBtn.addEventListener('click', () => {
+            currentStep = 0;
+            computerOutput.innerHTML = "<p>请点击上面的按钮查看计算机处理过程...</p>";
+            stepButtons.forEach(btn => {
+                btn.style.backgroundColor = '#4a86e8';
+            });
+        });
+    </script>
+</body>
+</html>
