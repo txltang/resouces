@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>认识计算机编码 - 中职计算机应用基础</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: linear-gradient(135deg, #1a6aa2 0%, #2c3e50 100%);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .header h1 {
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+        }
+        .header p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        .timer-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 80px;
+            height: 80px;
+            background-color: #e74c3c;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        .section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .section h2 {
+            color: #2c3e50;
+            border-left: 5px solid #3498db;
+            padding-left: 10px;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+        .section h3 {
+            color: #3498db;
+            margin: 15px 0 10px;
+            font-size: 1.2rem;
+        }
+        .section p {
+            margin-bottom: 10px;
+            text-align: justify;
+        }
+        .highlight {
+            background-color: #fff9c4;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        .example-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        .interactive-demo {
+            background-color: #e8f4fc;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .demo-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        .demo-controls button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .demo-controls button:hover {
+            background-color: #2980b9;
+        }
+        .demo-result {
+            background-color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            min-height: 100px;
+            border: 1px dashed #3498db;
+        }
+        .table-container {
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .homework {
+            background-color: #e8f5e9;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .reflection {
+            background-color: #fff3e0;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .key-point {
+            background-color: #ffebee;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border-left: 4px solid #e74c3c;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 15px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        @media (max-width: 768px) {
+            .timer-container {
+                width: 60px;
+                height: 60px;
+                font-size: 1rem;
+                top: 10px;
+                right: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 倒计时计时器 -->
+    <div class="timer-container" id="timer">
+        40:00
+    </div>
+
+    <!-- 页面内容 -->
+    <div class="header">
+        <h1>认识ASCII码和汉字编码、源码、反码、补码</h1>
+        <p>中职国家规划教材《计算机应用基础》教学演示</p>
+    </div>
+
+    <!-- 课程思政 -->
+    <div class="section">
+        <h2>课程思政 (课前德育3分钟)</h2>
+        <p>同学们，计算机技术是现代社会发展的重要推动力。我国在计算机领域取得了许多成就，比如超级计算机"神威·太湖之光"曾经是世界第一。学习计算机编码不仅是掌握技能，更是理解数字时代的基础。我们要树立科技报国的志向，为祖国的信息化建设贡献力量。</p>
+    </div>
+
+    <!-- 教学目标 -->
+    <div class="section">
+        <h2>教学目标</h2>
+        <ul>
+            <li>理解ASCII码的基本概念和作用</li>
+            <li>了解汉字编码的原理和常见编码标准</li>
+            <li>掌握源码、反码和补码的概念及转换方法</li>
+            <li>能够进行简单的编码转换操作</li>
+        </ul>
+    </div>
+
+    <!-- 教学重点与难点 -->
+    <div class="section">
+        <h2>教学重点与难点</h2>
+        <div class="key-point">
+            <h3>教学重点</h3>
+            <ul>
+                <li>ASCII码的编码规则</li>
+                <li>汉字编码的基本原理</li>
+                <li>补码的概念和计算方法</li>
+            </ul>
+        </div>
+        <div class="key-point">
+            <h3>教学难点</h3>
+            <ul>
+                <li>补码的理解和计算</li>
+                <li>不同编码之间的转换</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 知识复习 -->
+    <div class="section">
+        <h2>知识复习</h2>
+        <p>上节课我们学习了计算机中数据的表示方式。计算机内部使用二进制（0和1）来表示所有数据，包括数字、文字、图片等。</p>
+        <div class="example-box">
+            <p><strong>二进制示例：</strong> 数字5在计算机中表示为 101（二进制）</p>
+            <p><strong>思考：</strong> 计算机如何用0和1表示字母"A"和汉字"中"呢？</p>
+        </div>
+    </div>
+
+    <!-- 新课导入 -->
+    <div class="section">
+        <h2>新课导入</h2>
+        <p>想象一下，如果我们想用计算机给朋友发送一条消息"你好"，计算机内部是如何处理这些文字的呢？</p>
+        <p>就像我们使用字典查找汉字一样，计算机也需要一个"字典"来查找每个字符对应的二进制代码。今天我们就来学习计算机的"字典"——字符编码。</p>
+    </div>
+
+    <!-- 讲授新知 -->
+    <div class="section">
+        <h2>讲授新知</h2>
+        
+        <h3>1. ASCII码</h3>
+        <p>ASCII（美国信息交换标准代码）是计算机中最常用的字符编码之一。它使用7位二进制数（0-127）来表示128个字符，包括英文字母、数字、标点符号和控制字符。</p>
+        
+        <div class="table-container">
+            <table>
+                <tr>
+                    <th>字符</th>
+                    <th>ASCII码(十进制)</th>
+                    <th>ASCII码(二进制)</th>
+                </tr>
+                <tr>
+                    <td>A</td>
+                    <td>65</td>
+                    <td>01000001</td>
+                </tr>
+                <tr>
+                    <td>a</td>
+                    <td>97</td>
+                    <td>01100001</td>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>48</td>
+                    <td>00110000</td>
+                </tr>
+                <tr>
+                    <td>空格</td>
+                    <td>32</td>
+                    <td>00100000</td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="interactive-demo">
+            <h4>ASCII码查询演示</h4>
+            <div class="demo-controls">
+                <input type="text" id="asciiInput" placeholder="输入一个字符" maxlength="1">
+                <button onclick="showAsciiCode()">查询ASCII码</button>
+            </div>
+            <div class="demo-result" id="asciiResult">
+                输入一个字符查看其ASCII码
+            </div>
+        </div>
+        
+        <h3>2. 汉字编码</h3>
+        <p>ASCII码只能表示英文字符，无法表示汉字。为了在计算机中处理汉字，我国制定了多种汉字编码标准：</p>
+        <ul>
+            <li><strong>GB2312</strong>：最早的汉字编码标准，包含6763个汉字</li>
+            <li><strong>GBK</strong>：扩展的汉字编码，包含21003个汉字</li>
+            <li><strong>GB18030</strong>：最新的汉字编码标准，包含70244个汉字</li>
+            <li><strong>Unicode</strong>：国际统一编码，包含全世界所有字符</li>
+        </ul>
+        
+        <div class="interactive-demo">
+            <h4>汉字编码演示</h4>
+            <div class="demo-controls">
+                <input type="text" id="chineseInput" placeholder="输入一个汉字" maxlength="1">
+                <button onclick="showChineseCode()">查询编码</button>
+            </div>
+            <div class="demo-result" id="chineseResult">
+                输入一个汉字查看其编码信息
+            </div>
+        </div>
+        
+        <h3>3. 源码、反码、补码</h3>
+        <p>在计算机中，整数有符号数有三种表示方法：源码、反码和补码。</p>
+        
+        <div class="example-box">
+            <p><strong>源码：</strong> 最高位表示符号位（0为正，1为负），其余位表示数值的绝对值。</p>
+            <p><strong>反码：</strong> 正数的反码与其源码相同；负数的反码是符号位不变，其余位取反。</p>
+            <p><strong>补码：</strong> 正数的补码与其源码相同；负数的补码是其反码加1。</p>
+        </div>
+        
+        <div class="table-container">
+            <table>
+                <tr>
+                    <th>十进制</th>
+                    <th>源码</th>
+                    <th>反码</th>
+                    <th>补码</th>
+                </tr>
+                <tr>
+                    <td>+5</td>
+                    <td>00000101</td>
+                    <td>00000101</td>
+                    <td>00000101</td>
+                </tr>
+                <tr>
+                    <td>-5</td>
+                    <td>10000101</td>
+                    <td>11111010</td>
+                    <td>11111011</td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="interactive-demo">
+            <h4>源码、反码、补码转换演示</h4>
+            <div class="demo-controls">
+                <input type="number" id="numberInput" placeholder="输入一个整数" value="5" min="-127" max="127">
+                <button onclick="showNumberCodes()">计算编码</button>
+            </div>
+            <div class="demo-result" id="numberResult">
+                输入一个整数查看其源码、反码和补码
+            </div>
+        </div>
+    </div>
+
+    <!-- 课堂练习 -->
+    <div class="section">
+        <h2>课堂练习</h2>
+        <ol>
+            <li>字符'A'的ASCII码十进制是65，那么字符'C'的ASCII码十进制是多少？</li>
+            <li>汉字"中"在GB2312编码中的区号是54，位号是48，它的区位码是多少？</li>
+            <li>计算数字-10的源码、反码和补码（使用8位二进制表示）。</li>
+        </ol>
+        <div class="interactive-demo">
+            <h4>练习答案</h4>
+            <button id="toggleAnswersBtn" onclick="toggleAnswers()">查看答案</button>
+            <div class="demo-result" id="answersResult" style="display:none;">
+                <p>1. 字符'C'的ASCII码十进制是67（A=65，B=66，C=67）</p>
+                <p>2. 汉字"中"的区位码是5448</p>
+                <p>3. -10的源码：10001010，反码：11110101，补码：11110110</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 课堂总结 -->
+    <div class="section">
+        <h2>课堂总结</h2>
+        <ul>
+            <li>ASCII码是英文字符的编码标准，使用7位二进制表示128个字符</li>
+            <li>汉字编码有GB2312、GBK、GB18030等标准，解决了汉字在计算机中的表示问题</li>
+            <li>计算机中使用补码表示有符号整数，简化了运算电路设计</li>
+            <li>正数的源码、反码和补码相同，负数的补码是其反码加1</li>
+        </ul>
+    </div>
+
+    <!-- 作业布置 -->
+    <div class="homework">
+        <h2>作业布置</h2>
+        <ol>
+            <li>查找你名字中每个汉字的GB2312编码</li>
+            <li>计算数字-25、+36、-100的8位补码表示</li>
+        </ol>
+    </div>
+
+    <!-- 教学反思 -->
+    <div class="reflection">
+        <h2>教学反思</h2>
+        <p>本节课通过生活化的比喻和互动演示，帮助学生理解抽象的编码概念。对于中职学生，需要更多结合实际应用的例子，提高学生的学习兴趣和实用性。</p>
+        <p>在后续教学中，可以增加更多动手实践环节，加深学生对编码原理的理解。</p>
+    </div>
+
+    <div class="footer">
+        <p>中职国家规划教材《计算机应用基础》教学资源 • 适合中职学生</p>
+    </div>
+
+    <script>
+        // 倒计时功能
+        let totalSeconds = 40 * 60; // 40分钟
+        const timerElement = document.getElementById('timer');
+        
+        function updateTimer() {
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            
+            timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            if (totalSeconds > 0) {
+                totalSeconds--;
+            } else {
+                timerElement.style.backgroundColor = '#e74c3c';
+                timerElement.textContent = "时间到!";
+                clearInterval(timerInterval);
+            }
+        }
+        
+        const timerInterval = setInterval(updateTimer, 1000);
+        
+        // ASCII码查询功能
+        function showAsciiCode() {
+            const input = document.getElementById('asciiInput').value;
+            const resultElement = document.getElementById('asciiResult');
+            
+            if (input.length === 0) {
+                resultElement.innerHTML = "请输入一个字符";
+                return;
+            }
+            
+            const char = input.charAt(0);
+            const asciiCode = char.charCodeAt(0);
+            
+            resultElement.innerHTML = `
+                <p>字符: <strong>${char}</strong></p>
+                <p>ASCII码(十进制): <strong>${asciiCode}</strong></p>
+                <p>ASCII码(二进制): <strong>${asciiCode.toString(2).padStart(8, '0')}</strong></p>
+                <p>ASCII码(十六进制): <strong>${asciiCode.toString(16).toUpperCase()}</strong></p>
+            `;
+        }
+        
+        // 汉字编码演示
+        function showChineseCode() {
+            const input = document.getElementById('chineseInput').value;
+            const resultElement = document.getElementById('chineseResult');
+            
+            if (input.length === 0) {
+                resultElement.innerHTML = "请输入一个汉字";
+                return;
+            }
+            
+            const char = input.charAt(0);
+            const unicode = char.charCodeAt(0);
+            
+            // 模拟GB2312编码（实际GB2312编码需要复杂计算）
+            const gb2312Code = `模拟GB2312编码: ${(unicode - 19968).toString().padStart(4, '0')}`;
+            
+            resultElement.innerHTML = `
+                <p>汉字: <strong>${char}</strong></p>
+                <p>Unicode编码: <strong>U+${unicode.toString(16).toUpperCase().padStart(4, '0')}</strong></p>
+                <p>${gb2312Code}</p>
+                <p>UTF-8编码: <strong>${encodeURIComponent(char)}</strong></p>
+            `;
+        }
+        
+        // 源码、反码、补码演示
+        function showNumberCodes() {
+            const input = document.getElementById('numberInput').value;
+            const num = parseInt(input);
+            const resultElement = document.getElementById('numberResult');
+            
+            if (isNaN(num)) {
+                resultElement.innerHTML = "请输入有效的整数";
+                return;
+            }
+            
+            if (num < -127 || num > 127) {
+                resultElement.innerHTML = "请输入-127到127之间的整数";
+                return;
+            }
+            
+            let sourceCode, inverseCode, complementCode;
+            
+            if (num >= 0) {
+                // 正数
+                sourceCode = num.toString(2).padStart(8, '0');
+                inverseCode = sourceCode;
+                complementCode = sourceCode;
+            } else {
+                // 负数
+                // 源码：符号位为1，其余为绝对值的二进制
+                sourceCode = '1' + Math.abs(num).toString(2).padStart(7, '0');
+                // 反码：符号位不变，其余位取反
+                inverseCode = '1' + Math.abs(num).toString(2).padStart(7, '0').split('').map(bit => bit === '0' ? '1' : '0').join('');
+                // 补码：反码+1
+                let complement = parseInt(inverseCode, 2) + 1;
+                complementCode = complement.toString(2).padStart(8, '0');
+            }
+            
+            resultElement.innerHTML = `
+                <p>十进制数: <strong>${num}</strong></p>
+                <p>源码: <strong>${sourceCode}</strong></p>
+                <p>反码: <strong>${inverseCode}</strong></p>
+                <p>补码: <strong>${complementCode}</strong></p>
+            `;
+        }
+        
+        // 显示/隐藏练习答案
+        function toggleAnswers() {
+            const answersElement = document.getElementById('answersResult');
+            const button = document.getElementById('toggleAnswersBtn');
+            
+            if (answersElement.style.display === 'none') {
+                answersElement.style.display = 'block';
+                button.textContent = '隐藏答案';
+            } else {
+                answersElement.style.display = 'none';
+                button.textContent = '查看答案';
+            }
+        }
+        
+        // 页面加载完成后初始化
+        window.onload = function() {
+            updateTimer();
+        };
+    </script>
+</body>
+</html>
